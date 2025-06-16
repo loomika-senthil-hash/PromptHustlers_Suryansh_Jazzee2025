@@ -6,7 +6,7 @@ import gv_config
 import streamlit.components.v1 as components
 from googleapiclient.discovery import build
 
-# Initialize AI client
+# ✅ Initialize AI client
 ai_client = genai.Client(api_key=gv_config.GEMINI_API_KEY)
 
 def show_upload_page():
@@ -18,13 +18,13 @@ def show_upload_page():
         st.info("Please upload a file to continue.")
         return
 
-    # Save to temp file
+    # Save to temporary file
     ext = uploaded_file.name.rsplit(".", 1)[-1]
     with tempfile.NamedTemporaryFile(delete=False, suffix=f".{ext}") as tmp:
         tmp.write(uploaded_file.getvalue())
         tmp_path = tmp.name
 
-    # Extract content
+    # Extract text from file
     if ext == "pdf":
         content = "\n".join(p.extract_text() or "" for p in pdfplumber.open(tmp_path).pages)
     elif ext == "docx":
@@ -36,13 +36,14 @@ def show_upload_page():
         st.error("Unsupported file type!")
         return
 
-    # Show extracted content
+    # Display extracted content
     st.subheader("🧠 Extracted Content")
     st.text_area("Preview:", content[:1000], height=300)
 
+    # Save content for modes
     st.session_state.content = content
 
-    # Reader/Writer Learner
+    # === Reader/Writer Mode ===
     if st.session_state.learning_style == "reader":
         for action in ("summary", "story", "explain"):
             st.session_state.setdefault(action, False)
@@ -60,39 +61,53 @@ def show_upload_page():
         cols[2].button("💡 Explain", key="explain_btn", on_click=build_on_click("explain"))
 
         if st.session_state.summary:
-            resp = ai_client.generate_content(f"Summarize this in 3 bullet points:\n\n{content[:5000]}")
+            resp = ai_client.models.generate_content(
+                model="gemini-2.0-flash-001",
+                contents=f"Summarize this in 3 bullet points:\n\n{content[:5000]}"
+            )
             st.markdown("### 📝 Summary")
             st.write(resp.text)
 
         elif st.session_state.story:
-            resp = ai_client.generate_content(f"Write a short story that explains this:\n\n{content[:5000]}")
+            resp = ai_client.models.generate_content(
+                model="gemini-2.0-flash-001",
+                contents=f"Write a short story that explains this:\n\n{content[:5000]}"
+            )
             st.markdown("### 📖 Story")
             st.write(resp.text)
 
         elif st.session_state.explain:
-            resp = ai_client.generate_content(f"Explain this to a 10th grader:\n\n{content[:5000]}")
+            resp = ai_client.models.generate_content(
+                model="gemini-2.0-flash-001",
+                contents=f"Explain this to a 10th grader:\n\n{content[:5000]}"
+            )
             st.markdown("### 💡 Explanation")
             st.write(resp.text)
 
-    # Auditory Learner
+    # === Auditory Mode ===
     elif st.session_state.learning_style == "auditory":
         st.markdown("---")
         st.markdown("### 🗣️ Speak to Tutor")
-        components.iframe(
-            src="https://loomika-senthil-hash.github.io/smart_learner/",
-            height=300,
-            scrolling=False,
+        components.html(
+    f"""
+    <iframe src=" https://loomika-senthil-hash.github.io/PromptHustlers_Suryansh_Jazzee2025/"
+            width="1200" height="700"
             allow="microphone; autoplay"
-        )
+            style="border:none;">
+    </iframe>
+    """,
+    height=700
+)
 
-    # Visual Learner
+    # === Visual Mode ===
     elif st.session_state.learning_style == "visual":
         st.markdown("---")
-        st.markdown("### 🔍 Extracting Topics from your file...")
+        st.markdown("🔍 Extracting Topics from your file...")
 
         try:
-            resp = ai_client.generate_content(
-                f"List 3 key topics from this learning content:\n\n{content[:5000]}"
+            resp = ai_client.models.generate_content(
+                model="gemini-2.0-flash-001",
+                contents=f"List 3 key topics from this learning content:\n\n{content[:5000]}"
             )
             topics = [t.strip("- ").strip() for t in resp.text.split("\n") if t.strip()]
             st.success(f"🎯 Topics: {', '.join(topics)}")
@@ -118,45 +133,26 @@ def show_upload_page():
         except Exception as e:
             st.error(f"🚨 Could not fetch video suggestions: {e}")
 
-    # ✅ Kinesthetic Learner
+    # === Kinesthetic Mode ===
     elif st.session_state.learning_style == "kinesthetic":
-        st.markdown("### 👐 Kinesthetic Activity Suggestions")
-
+        st.markdown("### 👐 Kinesthetic Explanation")
         try:
-            resp = ai_client.generate_content(
-                f"Does this text describe a concept that has a PhET simulation? "
-                f"Answer 'yes' or 'no', and list the best-matching PhET sim title:\n\n{content[:5000]}"
-            )
-            sim_answer = resp.text.strip().lower()
-            if "yes" in sim_answer:
-                sim_title = sim_answer.split(":")[-1].strip() if ":" in sim_answer else "Build an Atom"
-                sim_iframe_url = "https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom_en-iframe.html"
-                components.iframe(src=sim_iframe_url, height=400)
-                st.markdown(f"**{sim_title}** — interact with this simulation to explore the concept!")
-        except Exception as e:
-            st.error("Couldn't load simulation suggestion.")
             resp = ai_client.models.generate_content(
-        model="gemini-2.0-flash-001",
-        contents=(
-            "Explain the following content in a **kinesthetic-friendly** way:\n"
-            "• Break it into 4–5 short steps\n"
-            "• Use a vivid movement-based analogy\n"
-            "• Include a simple gesture the learner can perform\n"
-            "• Add a “Try it yourself!” prompt\n\n"
-            "Use words like “Stand up and…”, “Pretend you are…”, or “Move your arms like…”.\n\n"
-            "Here is the content:\n\n"
-            f"{content[:5000]}"
-        )
-    )
-    st.markdown("### 👐 Kinesthetic Explanation")
-    st.write(resp.text)
-    st.write("🔍 **Scavenger Hunt**: Find something nearby that relates to the idea.")
-    photo = st.file_uploader("📸 Upload photo of your example:", type=["jpg", "png"])
-    if photo:
-            st.image(photo, caption="Your example in real life", use_column_width=True)
-            st.info("Awesome! You’re engaging your body and brain together.")
+                model="gemini-2.0-flash-001",
+                contents=(
+                    "Explain this in a kinesthetic-friendly way:\n"
+                    "• Break into 4–5 steps\n"
+                    "• Provide a movement-based analogy\n"
+                    "• Suggest a physical gesture\n"
+                    "• Include a 'Try it yourself!' prompt\n\n"
+                    f"{content[:5000]}"
+                )
+            )
+            st.write(resp.text)
+        except Exception as e:
+            st.error(f"❌ Kinesthetic explanation failed: {e}")
 
-    # ✅ Supabase Upload
+    # === Supabase Upload ===
     st.markdown("---")
     if st.button("📤 Upload to Supabase"):
         fname = f"uploads/{uploaded_file.name}"
