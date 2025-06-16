@@ -1,62 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"></head>
+<head>
+  <meta charset="UTF-8">
+</head>
 <body>
-  <button id="vapi-btn">🎙️ Speak</button>
-  <script src="https://loomika-senthil-hash.github.io/smart_learner/"></script>
+  <!--button id="vapi-btn" style="
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 25px;
+    padding: 12px 30px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  ">🎙️ Speak</button-->
+
+  <!-- ✅ Vapi SDK Script -->
   <script>
-    var vapiInstance = null;
+    let vapiInstance = null;
     const assistant = "72794508-9ffd-4402-9a53-a75e0e192062";
     const apiKey = "a18b1fdd-70aa-4367-b7dc-34b3896b19c8";
-    // Custom button styles
-const customButtonStyle = {
-  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  borderRadius: '25px',
-  padding: '12px 30px',
-  fontSize: '14px',
-  fontWeight: '600',
-  boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)',
-};
 
-// Custom panel styles  
-const customPanelStyle = {
-  background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-  borderRadius: '16px',
-  border: '2px solid #e1e8ed',
-  backdropFilter: 'blur(10px)',
-};
-
-
-    (function(d,t){
-      const s = d.createElement(t), h = d.getElementsByTagName(t)[0];
-      s.src = "https://loomika-senthil-hash.github.io/smart_learner/";
-      s.defer = s.async = true;
-      h.parentNode.insertBefore(s, h);
-      s.onload = () => {
-        vapiInstance = window.vapiSDK.run({ apiKey, assistant });
+    (function(d, t) {
+      const g = d.createElement(t);
+      const s = d.getElementsByTagName(t)[0];
+      g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+      g.defer = true;
+      g.async = true;
+      s.parentNode.insertBefore(g, s);
+      g.onload = () => {
+        vapiInstance = window.vapiSDK.run({
+          apiKey: apiKey,
+          assistant: assistant,
+          config: {}
+        });
         console.log("Vapi initialized:", vapiInstance);
       };
     })(document, "script");
+  </script>
 
+  <script>
     document.getElementById("vapi-btn").onclick = () => {
-      if (vapiInstance) {
-        vapiInstance.start({ assistant })
-          .then(() => console.log("Call started"))
-          .catch(err => console.error("Start failed:", err));
-      } else {
+      if (!vapiInstance) {
         console.error("SDK not ready");
+        return;
       }
+
+      // ❌ assistant should not be passed again here
+      vapiInstance.start({
+        phoneNumberId: "452a6e8b-345a-4334-b225-e0e1b8d356ae",
+        customer: { number: "+15304296832" }
+      })
+      .then(() => console.log("Call started"))
+      .catch(err => console.error("Start failed:", err));
     };
-    
-  vapi.on('message', (message) => {
-    if (message.type === 'transcript') {
-      console.log(`${message.role}: ${message.transcript}`);
-      // Update UI with real-time transcription
-    } else if (message.type === 'function-call') {
-      console.log('Function called:', message.functionCall.name);
-      // Handle custom function calls
+
+    function registerVapiEvents() {
+      if (!vapiInstance) return;
+      vapiInstance.on('message', (message) => {
+        if (message.type === 'transcript') {
+          console.log(`${message.role}: ${message.transcript}`);
+        } else if (message.type === 'function-call') {
+          console.log('Function called:', message.functionCall.name);
+        }
+      });
     }
-  });
+
+    const checkInterval = setInterval(() => {
+      if (vapiInstance) {
+        registerVapiEvents();
+        clearInterval(checkInterval);
+      }
+    }, 200);
+
+    window.addEventListener('message', event => {
+      event.source?.postMessage({ ack: true }, '*');
+    });
   </script>
 </body>
 </html>
