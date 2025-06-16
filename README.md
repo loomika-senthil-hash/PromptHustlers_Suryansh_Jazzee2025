@@ -77,6 +77,8 @@ Kinesthetic – Encourages movement, gestures, and physical interaction
 
 
 Future works
+
+
 -**Visual**: Suggests YouTube videos dynamically ,generates animations and videos,graphs and images
 
 
