@@ -43,7 +43,7 @@ Learning Style Handling – Branches logic based on style
 
 
 AI Integration – Uses Gemini AI for content generation and topic extraction
-![WhatsApp Image 2025-06-16 at 21 14 18_5b72f078](https://github.com/user-attachments/assets/dfdaf86a-b4d9-4d7a-8769-ee772fcc8ac3)
+
 
 Mode-Specific Output  ⬇
 
@@ -60,6 +60,8 @@ Auditory: Launches Vapi-powered voice interface
 Reader/Writer: Offers interactive summaries and stories
 ![WhatsApp Image 2025-06-16 at 23 08 52_2b2a5b0a](https://github.com/user-attachments/assets/fe9ddf99-5911-4d32-b343-af9efcd5d7b4)
 ![WhatsApp Image 2025-06-16 at 23 08 52_7d214183](https://github.com/user-attachments/assets/6fd5aa1a-d14a-4999-b802-36f04b80a29e)
+
+
 
 Visual: Embeds top YouTube videos 
 ![WhatsApp Image 2025-06-16 at 23 08 53_521dbd40](https://github.com/user-attachments/assets/e4a7646a-7df5-45f9-9e99-eb093a27128f)
