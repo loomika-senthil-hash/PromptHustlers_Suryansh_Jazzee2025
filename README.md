@@ -63,7 +63,7 @@ Kinesthetic: Provides gestures and movement prompts
 💡 Learning Styles
 
 
-Visual – Auto-generated video resources
+ Visual – Auto-generated video resources
 
 
 Auditory – Real-time voice-based tutor
