@@ -31,7 +31,11 @@ Upload a PDF, PPTX, or DOCX
 ![WhatsApp Image 2025-06-16 at 21 14 18_cd10389c](https://github.com/user-attachments/assets/0f7c99ca-2922-4694-ba85-42206a165095)
 
 Get personalized resources and activities
+
+
 🧩 How It Works
+
+
 Text Extraction – Reads content from uploaded files
 
 
