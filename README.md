@@ -9,7 +9,7 @@
 📚 Usage
 Run the app locally:
 bash
-Copy this ↓
+Copy this -->
 streamlit run app.py
 ![WhatsApp Image 2025-06-16 at 21 14 17_67667b0b](https://github.com/user-attachments/assets/7fa0deff-c184-47bf-a6aa-fde5e8b7ef89)
 
