@@ -61,6 +61,8 @@ Kinesthetic: Provides gestures and movement prompts
 
 
 💡 Learning Styles
+
+
 Visual – Auto-generated video resources
 
 
