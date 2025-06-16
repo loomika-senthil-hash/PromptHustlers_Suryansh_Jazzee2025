@@ -7,7 +7,25 @@
   <script>
     var vapiInstance = null;
     const assistant = "72794508-9ffd-4402-9a53-a75e0e192062";
-    const apiKey = "1eafc618-9303-417f-8311-4f7e9d48b26b";
+    const apiKey = "a18b1fdd-70aa-4367-b7dc-34b3896b19c8";
+    // Custom button styles
+const customButtonStyle = {
+  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+  borderRadius: '25px',
+  padding: '12px 30px',
+  fontSize: '14px',
+  fontWeight: '600',
+  boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)',
+};
+
+// Custom panel styles  
+const customPanelStyle = {
+  background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+  borderRadius: '16px',
+  border: '2px solid #e1e8ed',
+  backdropFilter: 'blur(10px)',
+};
+
 
     (function(d,t){
       const s = d.createElement(t), h = d.getElementsByTagName(t)[0];
@@ -29,6 +47,16 @@
         console.error("SDK not ready");
       }
     };
+    
+  vapi.on('message', (message) => {
+    if (message.type === 'transcript') {
+      console.log(`${message.role}: ${message.transcript}`);
+      // Update UI with real-time transcription
+    } else if (message.type === 'function-call') {
+      console.log('Function called:', message.functionCall.name);
+      // Handle custom function calls
+    }
+  });
   </script>
 </body>
 </html>
