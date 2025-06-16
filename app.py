@@ -4,6 +4,8 @@ from firebase_config import firebaseConfig
 from pages.quiz_app import quiz_page
 from upload_page import show_upload_page
 from voice_widget import show_voice_widget  # <-- our new widget
+import streamlit.components.v1 as components
+
 
 # 🔥 Firebase setup
 firebase = pyrebase.initialize_app(firebaseConfig)

@@ -58,7 +58,7 @@ def show_upload_page():
         st.markdown("---")
         st.markdown("### 🗣️ Speak to Tutor")
         components.iframe(
-            src="https://loomika-senthil-hash.github.io/voice-widget/",
+            src="https://loomika-senthil-hash.github.io/smart_learner/",
             height=300,
             scrolling=False,
             allow="microphone; autoplay"
