@@ -25,7 +25,7 @@ Choose your language (English, Hindi, Tamil)
 
 
 
-complete the 30 question just curated to find out ur type
+complete the 30 questions just curated to find out ur type
 ![WhatsApp Image 2025-06-16 at 21 14 19_806f8e6c](https://github.com/user-attachments/assets/0a6ad989-3ebe-4d35-b6c8-60ca9a0a0065)
 Upload a PDF, PPTX, or DOCX
 ![WhatsApp Image 2025-06-16 at 21 14 18_cd10389c](https://github.com/user-attachments/assets/0f7c99ca-2922-4694-ba85-42206a165095)
@@ -54,7 +54,13 @@ Kinesthetic: Provides gestures and movement prompts
 
 
 
-Auditory: Launches Vapi-powered voice interface
+Auditory: Launches voice interface
+
+demo video
+    
+    
+check this out ---->auditory/listener
+
 
 
 Reader/Writer: Offers interactive summaries and stories
@@ -90,7 +96,7 @@ Future works
 -**Visual**: Suggests YouTube videos dynamically ,generates animations and videos,graphs and images
 
 
-- **Auditory**: Embeds an interactive voice tutor that solves all the queries with very freat accuracy
+- **Auditory**: Embeds an interactive voice tutor that solves all the queries with high accuracy
 
 - 
 - **Reader/Writer**: Generates summaries, stories, explanations  and makes hard concepts into fiction story books
@@ -114,5 +120,9 @@ Want to help out? We'd love your input!
 
 
 4)Commit (git commit -m 'Add feature')
+
+
 5)Push (git push origin feature/xyz)
+
+
 6)Open a Pull Request
