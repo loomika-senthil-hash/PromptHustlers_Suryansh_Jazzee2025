@@ -56,6 +56,9 @@ Kinesthetic: Provides gestures and movement prompts
 
 Auditory: Launches Vapi-powered voice interface
 
+demo video
+
+
 
 Reader/Writer: Offers interactive summaries and stories
 ![WhatsApp Image 2025-06-16 at 23 08 52_2b2a5b0a](https://github.com/user-attachments/assets/fe9ddf99-5911-4d32-b343-af9efcd5d7b4)
