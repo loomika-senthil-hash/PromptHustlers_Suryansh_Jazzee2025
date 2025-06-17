@@ -57,6 +57,9 @@ Kinesthetic: Provides gestures and movement prompts
 Auditory: Launches Vapi-powered voice interface
 
 demo video
+    
+    
+check this out ---->auditory/listener
 
 
 
