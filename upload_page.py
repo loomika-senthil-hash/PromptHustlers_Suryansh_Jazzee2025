@@ -42,6 +42,16 @@ def show_upload_page():
 
     # Save content for modes
     st.session_state.content = content
+    components.html(
+        """
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <h2 class="text-xl font-bold">Feature One</h2>
+          <p>This helps learners visualize concepts.</p>
+        </div>
+        """,
+        width=400,
+        height=200
+    )
 
     # === Reader/Writer Mode ===
     if st.session_state.learning_style == "reader":
@@ -91,7 +101,7 @@ def show_upload_page():
         components.html(
     f"""
     <iframe src=" https://loomika-senthil-hash.github.io/PromptHustlers_Suryansh_Jazzee2025/"
-            width="1200" height="700"
+            width="1200" height="200"
             allow="microphone; autoplay"
             style="border:none;">
     </iframe>

@@ -1,0 +1,7 @@
+streamlit
+pyrebase4
+supabase-py
+pdfplumber
+python-docx
+python-pptx
+genai
